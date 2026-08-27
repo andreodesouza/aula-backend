@@ -4,45 +4,49 @@ chamados = [
         "titulo": "Instalar Roteador",
         "prioridade":"Alta",
         "situacao":"Aberto".lower(),
-        "acesso":"Rede",
+        "categoria":"Rede",
     },
     {
         "id":2,
         "titulo":"Receber Pagamento",
         "prioridade":"Médio",
         "situacao":"Fechado".lower(),
-        "acesso":"Financeiro",
+        "categoria":"Financeiro",
     },
     {
         "id":3,
         "titulo":"Trocar Memória RAM",
         "prioridade":"Urgente",
         "situacao":"Fechado".lower(),
-        "acesso":"Hardware",
+        "categoria":"Hardware",
     },
     {
         "id":4,
         "titulo":"Enviar E-mail do Pagamento",
         "prioridade":"Baixa",
         "situacao":"Fechado".lower(),
-        "acesso":"Rede",
+        "categoria":"Rede",
     },
     {
         "id":5,
         "titulo":"Instalar Televisão",
         "prioridade":"Alta",
         "situacao":"Aberto".lower(),
-        "acesso":"Estoque",
+        "categoria":"Estoque",
     },
 
 ]
+
+
+
+
 
 def buscar_chamados():
     for chamado in chamados:
         print(f"#{chamado['id']} - {chamado['titulo']}")
         print(f"Prioridade: {chamado['prioridade']}")
         print(f"Situação: {chamado['situacao']}")
-        print(f"Acesso: {chamado['acesso']}")
+        print(f"Acesso: {chamado['acesso']}\n")
 
 def filtrar_chamados():
         
@@ -71,13 +75,26 @@ def atualizacao():
     if not encontrou_chamado:
         print("Chamado não encontrado")   
 
+
+def chamado():
+    categorias_unicas = set()
+    for chamado in chamados:
+        categorias_unicas.add(chamado["categoria"])
+    print(f'\nCategorias Encontradas\n')
+    for categoria in categorias_unicas:
+        print(categoria)
+
+
+
+
 def menu():
 
     while True:
-
+        print(f'Menu de busca\n')
         print('1 - Buscar Chamados')
-        print('2 - Filtrar Chamados')
+        print('2 - Filtrar Chamadosz')
         print('3 - Atualizar Chamados')
+        print('4 - Adcionar Categorias\n')
 
         opcao = int(input('Escolha uma opção: '))
 
@@ -89,6 +106,9 @@ def menu():
             
         elif opcao == 3:
             atualizacao()
+
+        elif opcao == 4:
+            chamado()
                 
     
 menu()
