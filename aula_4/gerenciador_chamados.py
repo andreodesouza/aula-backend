@@ -46,7 +46,7 @@ def buscar_chamados():
         print(f"#{chamado['id']} - {chamado['titulo']}")
         print(f"Prioridade: {chamado['prioridade']}")
         print(f"Situação: {chamado['situacao']}")
-        print(f"Acesso: {chamado['acesso']}\n")
+        print(f"Categoria: {chamado['categoria']}\n")
 
 def filtrar_chamados():
         
@@ -94,7 +94,7 @@ def menu():
         print('1 - Buscar Chamados')
         print('2 - Filtrar Chamadosz')
         print('3 - Atualizar Chamados')
-        print('4 - Adcionar Categorias\n')
+        print('4 - Adicionar Categorias\n')
 
         opcao = int(input('Escolha uma opção: '))
 
