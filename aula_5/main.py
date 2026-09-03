@@ -1,4 +1,4 @@
-from tarefa import Tarefa
+from tarefa import Tarefa 
 from servicos import cadastrar_tarefa, filtrar_por_situacao, listar_tarefas
 
 tarefas = []
@@ -14,7 +14,7 @@ cadastrar_tarefa(
 
 cadastrar_tarefa(
     tarefas,
-    "Atualizar manual interno ",
+    "Atualizar manual interno",
     "Ajustar instruções de atendimento ",
     "Média ",
     Tarefa,
