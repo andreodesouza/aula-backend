@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --tag-alta: #fee2e2;
+            --tag-alta-text: #991b1b;
+            --tag-media: #fef3c7;
+            --tag-media-text: #92400e;
+            --tag-concluida: #dcfce7;
+            --tag-concluida-text: #166534;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 2.5rem 1rem;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        li {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        @media (min-width: 500px) {
+            li {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .tarefa-titulo {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .tarefa-detalhes {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+
+        .badge-alta {
+            background-color: var(--tag-alta);
+            color: var(--tag-alta-text);
+        }
+
+        .badge-media {
+            background-color: var(--tag-media);
+            color: var(--tag-media-text);
+        }
+
+        .badge-concluida {
+            background-color: var(--tag-concluida);
+            color: var(--tag-concluida-text);
+        }
+
+        .badge-padrao {
+            background-color: var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .empty-msg {
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .btn-voltar {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-voltar:hover {
+            background-color: var(--primary-hover);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="{% url 'inicio' %}" class="logo">Gestão de Tarefas</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Lista Inicial de Tarefas</h1>
+
+            {% if tarefas %}
+            <ul>
+                {% for tarefa in tarefas %}
+                <li>
+                    <span class="tarefa-titulo">{{ tarefa.titulo }}</span>
+                    <div class="tarefa-detalhes">
+                        <!-- Estilização dinâmica simples para prioridade/situação -->
+                        <span
+                            class="badge {% if tarefa.prioridade == 'Alta' %}badge-alta{% elif tarefa.prioridade == 'Média' %}badge-media{% else %}badge-padrao{% endif %}">
+                            {{ tarefa.prioridade }}
+                        </span>
+                        <span
+                            class="badge {% if tarefa.situacao == 'Concluída' %}badge-concluida{% else %}badge-padrao{% endif %}">
+                            {{ tarefa.situacao }}
+                        </span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty-msg">Nenhuma tarefa cadastrada até o momento.</p>
+            {% endif %}
+
+            <a href="{% url 'inicio' %}" class="btn-voltar">&larr; Voltar ao início</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>Laboratório de Programação Back End &copy; 2026</p>
+    </footer>
+
+</body>
+
+</html>
