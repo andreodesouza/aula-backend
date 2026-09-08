@@ -4,22 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Tarefas</title>
+    <title>Painel de Tarefas</title>
     <style>
         :root {
-            --primary-color: #2563eb;
-            --primary-hover: #1d4ed8;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --tag-alta: #fee2e2;
-            --tag-alta-text: #991b1b;
-            --tag-media: #fef3c7;
-            --tag-media-text: #92400e;
-            --tag-concluida: #dcfce7;
-            --tag-concluida-text: #166534;
+            --bg-main: #fcfbf9;
+            --surface: #ffffff;
+            --surface-alt: #f4f3f0;
+            --accent: #d97706;
+            --accent-light: rgba(217, 119, 6, 0.1);
+            --text-main: #292524;
+            --text-muted: #78716c;
+            --border: #e7e5e4;
+            --red-bg: #fee2e2;
+            --red-text: #991b1b;
+            --yellow-bg: #fef3c7;
+            --yellow-text: #92400e;
+            --green-bg: #d1fae5;
+            --green-text: #065f46;
         }
 
         * {
@@ -29,19 +30,19 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Georgia', serif;
+            background-color: var(--bg-main);
             color: var(--text-main);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         header {
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 2rem;
+            background-color: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1.5rem 2rem;
         }
 
         .nav-container {
@@ -53,54 +54,93 @@
         }
 
         .logo {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-main);
             text-decoration: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "✦";
+            color: var(--accent);
         }
 
         main {
             flex: 1;
             display: flex;
             justify-content: center;
-            padding: 2.5rem 1rem;
+            padding: 4rem 1rem;
         }
 
         .container {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem;
-            max-width: 700px;
+            background-color: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            padding: 3rem;
+            max-width: 720px;
             width: 100%;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            box-shadow: 8px 8px 0px 0px var(--border);
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 1rem;
         }
 
         h1 {
             font-size: 1.75rem;
-            margin-bottom: 1.5rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
             color: var(--text-main);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.75rem;
+            font-family: 'Georgia', serif;
+        }
+
+        .contador-tarefas {
+            font-size: 0.8rem;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            font-weight: 600;
+            font-family: sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         ul {
             list-style: none;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         li {
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1rem 1.25rem;
-            margin-bottom: 0.75rem;
+            background-color: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1.25rem 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 1rem;
+            transition: all 0.2s ease;
         }
 
-        @media (min-width: 500px) {
+        li:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        @media (min-width: 540px) {
             li {
                 flex-direction: row;
                 justify-content: space-between;
@@ -109,72 +149,84 @@
         }
 
         .tarefa-titulo {
+            font-family: sans-serif;
             font-weight: 600;
             color: var(--text-main);
+            font-size: 1rem;
         }
 
         .tarefa-detalhes {
             display: flex;
             gap: 0.5rem;
-            font-size: 0.875rem;
+            font-family: sans-serif;
         }
 
         .badge {
             padding: 0.25rem 0.6rem;
-            border-radius: 9999px;
-            font-weight: 500;
-            font-size: 0.75rem;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .badge-alta {
-            background-color: var(--tag-alta);
-            color: var(--tag-alta-text);
+            background-color: var(--red-bg);
+            color: var(--red-text);
         }
 
         .badge-media {
-            background-color: var(--tag-media);
-            color: var(--tag-media-text);
+            background-color: var(--yellow-bg);
+            color: var(--yellow-text);
         }
 
         .badge-concluida {
-            background-color: var(--tag-concluida);
-            color: var(--tag-concluida-text);
+            background-color: var(--green-bg);
+            color: var(--green-text);
         }
 
         .badge-padrao {
-            background-color: var(--border-color);
+            background-color: var(--border);
             color: var(--text-muted);
         }
 
         .empty-msg {
             color: var(--text-muted);
             text-align: center;
-            padding: 2rem 0;
+            padding: 4rem 0;
+            font-style: italic;
+            font-size: 1.05rem;
         }
 
         .btn-voltar {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.6rem 1.25rem;
-            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--text-main);
+            color: var(--surface);
+            padding: 0.75rem 1.5rem;
+            border-radius: 2px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-family: sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             transition: background-color 0.2s ease;
         }
 
         .btn-voltar:hover {
-            background-color: var(--primary-hover);
+            background-color: var(--accent);
         }
 
         footer {
             text-align: center;
-            padding: 1.5rem;
-            font-size: 0.875rem;
+            padding: 2rem;
+            font-family: sans-serif;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            background-color: var(--card-bg);
+            border-top: 1px solid var(--border);
+            background-color: var(--surface);
         }
     </style>
 </head>
@@ -183,13 +235,18 @@
 
     <header>
         <div class="nav-container">
-            <a href="{% url 'inicio' %}" class="logo">Gestão de Tarefas</a>
+            <a href="{% url 'inicio' %}" class="logo">Caderno de Tarefas</a>
         </div>
     </header>
 
     <main>
         <div class="container">
-            <h1>Lista Inicial de Tarefas</h1>
+            <div class="header-section">
+                <h1>Registro de Atividades</h1>
+                {% if tarefas %}
+                <span class="contador-tarefas">{{ tarefas|length }} pendências</span>
+                {% endif %}
+            </div>
 
             {% if tarefas %}
             <ul>
@@ -197,7 +254,6 @@
                 <li>
                     <span class="tarefa-titulo">{{ tarefa.titulo }}</span>
                     <div class="tarefa-detalhes">
-                        <!-- Estilização dinâmica simples para prioridade/situação -->
                         <span
                             class="badge {% if tarefa.prioridade == 'Alta' %}badge-alta{% elif tarefa.prioridade == 'Média' %}badge-media{% else %}badge-padrao{% endif %}">
                             {{ tarefa.prioridade }}
@@ -211,10 +267,10 @@
                 {% endfor %}
             </ul>
             {% else %}
-            <p class="empty-msg">Nenhuma tarefa cadastrada até o momento.</p>
+            <p class="empty-msg">Nenhuma anotação encontrada no sistema.</p>
             {% endif %}
 
-            <a href="{% url 'inicio' %}" class="btn-voltar">&larr; Voltar ao início</a>
+            <a href="{% url 'inicio' %}" class="btn-voltar">&larr; Voltar ao Início</a>
         </div>
     </main>
 
